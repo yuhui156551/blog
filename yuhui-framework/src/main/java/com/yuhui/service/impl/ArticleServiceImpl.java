@@ -7,6 +7,7 @@ import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Article;
 import com.yuhui.mapper.ArticleMapper;
 import com.yuhui.service.ArticleService;
+import com.yuhui.utils.BeanCopyUtils;
 import com.yuhui.vo.HotArticleVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,6 @@ import static com.yuhui.contants.SystemConstants.ARTICLE_STATUS_NORMAL;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
-    /**
-     * 查询热门文章：前十条、非草稿、按浏览量降序排
-     *
-     * @return
-     */
     @Override
     public ResponseResult hotArticleList() {
         // 构造条件
@@ -43,13 +39,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         // 获取数据
         List<Article> articles = page.getRecords();
         // bean拷贝，封装成vo对象脱敏
-        ArrayList<HotArticleVo> articleVos = new ArrayList<>();
-        for (Article article : articles) {
-            HotArticleVo vo = new HotArticleVo();
-            BeanUtils.copyProperties(article, vo);
-            articleVos.add(vo);
-        }
+//        ArrayList<HotArticleVo> articleVos = new ArrayList<>();
+//        for (Article article : articles) {
+//            HotArticleVo vo = new HotArticleVo();
+//            BeanUtils.copyProperties(article, vo);
+//            articleVos.add(vo);
+//        }
+        List<HotArticleVo> articleVos = BeanCopyUtils.copyBeanList(articles, HotArticleVo.class);
         // 返回
-        return ResponseResult.okResult(articles);
+        return ResponseResult.okResult(articleVos);
     }
 }
