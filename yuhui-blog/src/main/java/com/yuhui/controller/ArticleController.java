@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Article;
 import com.yuhui.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @GetMapping("/list")
-    public List<Article> test(){
-        return articleService.list();
+    @GetMapping("/hotArticleList")
+    public ResponseResult hotArticleList(){
+        return articleService.hotArticleList();
     }
 }
