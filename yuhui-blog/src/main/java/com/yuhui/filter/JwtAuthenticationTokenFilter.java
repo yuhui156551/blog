@@ -48,7 +48,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             e.printStackTrace();
             // token超时 or token非法
             // 响应告诉前端需要重新登录
-            // 不能直接抛异常，因为同意异常处理在controller层，这里的异常不会被捕获
+            // 不能直接抛异常，因为统一异常处理在controller层，这里的异常不会被捕获
             ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
             // 这里是filter，并非像MVC那般会处理返回信息转成JSON，所以需要我们手动处理
             WebUtils.renderString(response, JSON.toJSONString(result));

@@ -1,11 +1,14 @@
 package com.yuhui.controller;
 
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.entity.LoginUser;
 import com.yuhui.domain.entity.User;
 import com.yuhui.enums.AppHttpCodeEnum;
 import com.yuhui.exception.SystemException;
 import com.yuhui.service.BlogLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +32,10 @@ public class BlogLoginController {
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }
         return blogLoginService.login(user);
+    }
+
+    @PostMapping("/logout")
+    public ResponseResult logout(){
+        return blogLoginService.logout();
     }
 }
