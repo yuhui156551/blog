@@ -3,6 +3,9 @@ package com.yuhui.domain.entity;
 import java.util.Date;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,14 +37,17 @@ public class Comment  {
     private Long toCommentUserId;
     // 目标评论的id
     private Long toCommentId;
-    
+
+    // 设置插入或更新时自动填充字段...
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
-    
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
-    
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
-    
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+
     // 删除标志（0 代表未删除，1 代表已删除）
     private Integer delFlag;
 

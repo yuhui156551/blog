@@ -1,4 +1,4 @@
-package com.yuhui.handler;
+package com.yuhui.handler.security;
 
 import com.alibaba.fastjson.JSON;
 import com.yuhui.domain.ResponseResult;

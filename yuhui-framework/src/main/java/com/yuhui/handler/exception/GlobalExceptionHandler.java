@@ -1,4 +1,4 @@
-package com.yuhui.handler;
+package com.yuhui.handler.exception;
 
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.enums.AppHttpCodeEnum;

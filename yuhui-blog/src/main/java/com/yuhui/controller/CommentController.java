@@ -1,13 +1,11 @@
 package com.yuhui.controller;
 
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.entity.Comment;
 import com.yuhui.service.CommentService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yuhui
@@ -30,5 +28,15 @@ public class CommentController {
     @GetMapping("/commentList")
     public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize){
         return  commentService.commentList(articleId, pageNum, pageSize);
+    }
+
+    /**
+     * 发布评论
+     * @param comment 请求体内容
+     * @return 200
+     */
+    @PostMapping
+    public ResponseResult addComment(@RequestBody Comment comment){
+        return commentService.addComment(comment);
     }
 }
