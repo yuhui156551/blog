@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Comment;
 import com.yuhui.service.CommentService;
@@ -27,7 +28,15 @@ public class CommentController {
      */
     @GetMapping("/commentList")
     public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize){
-        return  commentService.commentList(articleId, pageNum, pageSize);
+        return  commentService.commentList(SystemConstants.ARTICLE_COMMENT, articleId, pageNum, pageSize);
+    }
+
+    /**
+     * 分页获取友链评论信息
+     */
+    @GetMapping("/linkCommentList")
+    public ResponseResult linkCommentList(Integer pageNum,Integer pageSize){
+        return commentService.commentList(SystemConstants.LINK_COMMENT,null,pageNum,pageSize);
     }
 
     /**

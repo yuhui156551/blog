@@ -23,7 +23,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
             userId = SecurityUtils.getUserId();
         } catch (Exception e) {
             e.printStackTrace();
-            userId = -1L;// 表示是自己创建
+            userId = -1L;// 表示未登录，设定为是自己创建
         }
         this.setFieldValByName("createTime", new Date(), metaObject);
         this.setFieldValByName("createBy",userId , metaObject);

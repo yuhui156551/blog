@@ -3,6 +3,7 @@ package com.yuhui.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Comment;
 import com.yuhui.enums.AppHttpCodeEnum;
@@ -31,10 +32,14 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     private UserService userService;
 
     @Override
-    public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize) {
+    public ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
         // 查询文章的根评论
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Comment::getArticleId, articleId);
+        // 当commentType为0的时候(文章评论)，才加入articleId这个条件
+        queryWrapper.eq(SystemConstants.ARTICLE_COMMENT.equals(commentType), Comment::getArticleId, articleId);
+        // 评论类型
+        queryWrapper.eq(Comment::getType, commentType);
+        // rootId为-1
         queryWrapper.eq(Comment::getRootId, -1);
         // 分页查询
         Page<Comment> page = new Page<>(pageNum, pageSize);
