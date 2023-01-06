@@ -22,7 +22,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 public class Category  {
     @TableId
     private Long id;
-
     // 分类名
     private String name;
     // 父分类id，如果没有父分类为-1

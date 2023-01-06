@@ -28,3 +28,8 @@ mybatis-plus:
       logic-not-delete-value: 0
       # 主键自增
       id-type: auto
+# 七牛云oss
+oss:
+  accessKey: tI9ytiC9NM9i8ADGwPyzH53O5mIuvZ4XypHPCenu
+  secretKey: nBfsDBW7FoMNMoa4PJfE1xblAluWUqHCbxvneVfW
+  bucket: yuhui-blog

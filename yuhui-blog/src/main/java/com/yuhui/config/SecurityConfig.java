@@ -48,8 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/login").anonymous()
-                // 对于退出登录接口，需要认证
+                // 对于以下接口，需要认证才可以访问
                 .antMatchers("/logout").authenticated()
+                .antMatchers("/user/userInfo").authenticated()
                 // jwt过滤器测试用，如果测试没有问题，把这里删除
 //                .antMatchers("/link/getAllLink").authenticated()
                 // 除上面外的所有请求全部不需要认证即可访问
