@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.LoginUser;
 import com.yuhui.domain.entity.User;
@@ -26,6 +27,7 @@ public class BlogLoginController {
     private BlogLoginService blogLoginService;
 
     @PostMapping("/login")
+    @SystemLog(businessName = "用户登录")
     public ResponseResult login(@RequestBody User user){
         if(!StringUtils.hasText(user.getUserName())){
             // 用户名为空

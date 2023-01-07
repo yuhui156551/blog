@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
+ * 认证过滤器
+ *
  * @author yuhui
  * @date 2023/1/4 13:15
  */
@@ -36,7 +38,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         // 获取token
         String token = request.getHeader("token");
         if(!StringUtils.hasText(token)) {
-            // token不存在，说明是第一次登录，直接放行
+            // token不存在，说明是第一次登录，即匿名访问，直接放行
             filterChain.doFilter(request, response);
             return;
         }
