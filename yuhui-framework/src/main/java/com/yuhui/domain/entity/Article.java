@@ -57,5 +57,9 @@ public class Article {
     // 删除标志（0 代表未删除，1 代表已删除）
     private Integer delFlag;
 
+    public Article(Long id, long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+    }
 }
 

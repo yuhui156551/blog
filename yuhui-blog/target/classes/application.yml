@@ -17,9 +17,9 @@ spring:
     host: 192.168.44.100
     password: 123321
 mybatis-plus:
-  configuration:
-    # 日志
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    # 日志
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       # 逻辑删除

@@ -11,6 +11,7 @@ import com.yuhui.mapper.ArticleMapper;
 import com.yuhui.service.ArticleService;
 import com.yuhui.service.CategoryService;
 import com.yuhui.utils.BeanCopyUtils;
+import com.yuhui.utils.RedisCache;
 import com.yuhui.vo.ArticleDetailVo;
 import com.yuhui.vo.ArticleListVo;
 import com.yuhui.vo.HotArticleVo;
@@ -34,6 +35,8 @@ import static com.yuhui.contants.SystemConstants.ARTICLE_STATUS_NORMAL;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RedisCache redisCache;
 
     @Override
     public ResponseResult hotArticleList() {
@@ -83,6 +86,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 //            Category category = categoryService.getById(article.getCategoryId());
 //            article.setCategoryName(category.getName());
 //        }
+        for (Article article : articles) {
+            // 从redis获取viewCount
+            Integer viewCount = redisCache.getCacheMapValue(SystemConstants.ARTICLE_VIEW_COUNT_KEY, article.getId().toString());
+            article.setViewCount(viewCount.longValue());
+        }
         // 封装查询结果
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articles, ArticleListVo.class);
         PageVo pageVo = new PageVo(articleListVos, page.getTotal());
@@ -94,6 +102,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult getArticleDetail(Long id) {
         // 根据id查询文章
         Article article = getById(id);
+        // 从redis获取viewCount
+        Integer viewCount = redisCache.getCacheMapValue(SystemConstants.ARTICLE_VIEW_COUNT_KEY, id.toString());
+        article.setViewCount(viewCount.longValue());
         // 封装成VO对象
         ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
         // 根据分类id查询分类名
@@ -104,5 +115,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         // 封装响应返回
         return ResponseResult.okResult(articleDetailVo);
+    }
+
+    @Override
+    public ResponseResult updateViewCount(Long id) {
+        // 更新redis中对应id的浏览量
+        redisCache.incrementCacheMapValue(SystemConstants.ARTICLE_VIEW_COUNT_KEY, id.toString(), 1);
+        return ResponseResult.okResult();
     }
 }

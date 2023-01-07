@@ -26,4 +26,8 @@ public class SystemConstants
      *  友链评论
      */
     public static final String LINK_COMMENT = "1";
+    /**
+     *  文章围观量Redis键
+     */
+    public static final String ARTICLE_VIEW_COUNT_KEY = "article:viewCount:";
 }

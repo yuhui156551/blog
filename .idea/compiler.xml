@@ -11,11 +11,11 @@
         <module name="yuhui-blog" />
         <module name="security" />
         <module name="yuhui-admin" />
+        <module name="hm-dianping" />
         <module name="reggie" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="hm-dianping" target="1.8" />
       <module name="store" target="1.8" />
     </bytecodeTargetLevel>
   </component>
