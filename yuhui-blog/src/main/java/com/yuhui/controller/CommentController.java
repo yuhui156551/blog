@@ -4,6 +4,7 @@ import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Comment;
 import com.yuhui.service.CommentService;
+import io.swagger.annotations.Api;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/comment")
+@Api(tags = "评论", description = "评论相关接口")
 public class CommentController {
 
     @Autowired
