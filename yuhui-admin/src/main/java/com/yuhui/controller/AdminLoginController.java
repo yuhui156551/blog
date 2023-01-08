@@ -5,12 +5,10 @@ import com.yuhui.domain.entity.User;
 import com.yuhui.enums.AppHttpCodeEnum;
 import com.yuhui.exception.SystemException;
 import com.yuhui.service.AdminLoginService;
+import com.yuhui.vo.AdminUserInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yuhui
@@ -44,5 +42,10 @@ public class AdminLoginController {
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }
         return adminLoginService.login(user);
+    }
+
+    @GetMapping("/getInfo")
+    public ResponseResult<AdminUserInfoVo> getInfo(){
+        return adminLoginService.getInfo();
     }
 }

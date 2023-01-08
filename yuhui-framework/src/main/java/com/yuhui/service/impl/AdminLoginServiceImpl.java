@@ -4,9 +4,13 @@ import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.LoginUser;
 import com.yuhui.domain.entity.User;
 import com.yuhui.service.AdminLoginService;
+import com.yuhui.service.MenuService;
+import com.yuhui.service.RoleService;
 import com.yuhui.utils.BeanCopyUtils;
 import com.yuhui.utils.JwtUtil;
 import com.yuhui.utils.RedisCache;
+import com.yuhui.utils.SecurityUtils;
+import com.yuhui.vo.AdminUserInfoVo;
 import com.yuhui.vo.BlogUserLoginVo;
 import com.yuhui.vo.UserInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -29,6 +34,10 @@ public class AdminLoginServiceImpl implements AdminLoginService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private RedisCache redisCache;
+    @Autowired
+    private MenuService menuService;
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public ResponseResult login(User user) {
@@ -54,5 +63,21 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         Map<String,String> map = new HashMap<>();
         map.put("token", token);
         return ResponseResult.okResult(map);
+    }
+
+    @Override
+    public ResponseResult<AdminUserInfoVo> getInfo() {
+        // 获取当前登录的用户
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        // 根据id查询权限信息
+        List<String> perms = menuService.selectPermsByUserId(loginUser.getUser().getId());
+        // 根据id查询角色信息
+        List<String> roleKeyList = roleService.selectRoleKeyByUserId(loginUser.getUser().getId());
+        // 获取用户信息
+        User user = loginUser.getUser();
+        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
+        // 封装返回
+        AdminUserInfoVo adminUserInfoVo = new AdminUserInfoVo(perms, roleKeyList, userInfoVo);
+        return ResponseResult.okResult(adminUserInfoVo);
     }
 }

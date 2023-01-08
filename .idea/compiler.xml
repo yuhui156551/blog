@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="yuhui-framework" />
+        <module name="dianping" />
         <module name="yuhui-blog" />
         <module name="security" />
         <module name="yuhui-admin" />
-        <module name="hm-dianping" />
         <module name="reggie" />
       </profile>
     </annotationProcessing>
@@ -21,7 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="hm-dianping" options="-parameters" />
+      <module name="dianping" options="-parameters" />
       <module name="reggie" options="-parameters" />
       <module name="security" options="-parameters" />
       <module name="store" options="-parameters" />

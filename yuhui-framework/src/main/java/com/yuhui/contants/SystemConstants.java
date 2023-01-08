@@ -30,4 +30,8 @@ public class SystemConstants
      *  文章围观量Redis键
      */
     public static final String ARTICLE_VIEW_COUNT_KEY = "article:viewCount:";
+    /**
+     *  状态正常
+     */
+    public static final String STATUS_NORMAL = "0";
 }

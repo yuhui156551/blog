@@ -2,6 +2,7 @@ package com.yuhui.service;
 
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.User;
+import com.yuhui.vo.AdminUserInfoVo;
 
 /**
  * @author yuhui
@@ -9,4 +10,7 @@ import com.yuhui.domain.entity.User;
  */
 public interface AdminLoginService {
     ResponseResult login(User user);
+
+    ResponseResult<AdminUserInfoVo> getInfo();
+
 }
