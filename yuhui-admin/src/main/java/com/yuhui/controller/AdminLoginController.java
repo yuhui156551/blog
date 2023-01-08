@@ -6,6 +6,7 @@ import com.yuhui.enums.AppHttpCodeEnum;
 import com.yuhui.exception.SystemException;
 import com.yuhui.service.AdminLoginService;
 import com.yuhui.vo.AdminUserInfoVo;
+import com.yuhui.vo.RoutersVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,10 @@ public class AdminLoginController {
     @GetMapping("/getInfo")
     public ResponseResult<AdminUserInfoVo> getInfo(){
         return adminLoginService.getInfo();
+    }
+
+    @GetMapping("/getRouters")
+    public ResponseResult<RoutersVo> getRouters(){
+        return adminLoginService.getRouters();
     }
 }

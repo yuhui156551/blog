@@ -3,6 +3,7 @@ package com.yuhui.service;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.User;
 import com.yuhui.vo.AdminUserInfoVo;
+import com.yuhui.vo.RoutersVo;
 
 /**
  * @author yuhui
@@ -13,4 +14,5 @@ public interface AdminLoginService {
 
     ResponseResult<AdminUserInfoVo> getInfo();
 
+    ResponseResult<RoutersVo> getRouters();
 }
