@@ -5,6 +5,7 @@ import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.dto.TagListDto;
 import com.yuhui.domain.entity.Tag;
 import com.yuhui.domain.vo.PageVo;
+import com.yuhui.domain.vo.TagVo;
 
 
 /**
@@ -18,4 +19,6 @@ public interface TagService extends IService<Tag> {
     ResponseResult<PageVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
 
     ResponseResult addTag(TagListDto tagListDto);
+
+    ResponseResult updateTag(TagVo tagVo);
 }

@@ -3,14 +3,17 @@ package com.yuhui.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun.xml.internal.bind.v2.TODO;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.dto.TagListDto;
 import com.yuhui.domain.entity.Tag;
 import com.yuhui.domain.vo.PageVo;
+import com.yuhui.domain.vo.TagVo;
 import com.yuhui.enums.AppHttpCodeEnum;
 import com.yuhui.exception.SystemException;
 import com.yuhui.mapper.TagMapper;
 import com.yuhui.service.TagService;
+import com.yuhui.utils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -60,6 +63,24 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         tag.setRemark(tagListDto.getRemark());
         // 保存并返回
         save(tag);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult updateTag(TagVo tagVo) {
+        // 内容不能为空
+        if(!StringUtils.hasText(tagVo.getName()) || !StringUtils.hasText(tagVo.getRemark())){
+            throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
+        }
+        // 设置值
+        Tag tag = BeanCopyUtils.copyBean(tagVo, Tag.class);
+        // 根据id更新tag
+        LambdaQueryWrapper<Tag> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Tag::getId, tagVo.getId());
+        update(tag, lambdaQueryWrapper);
+        // TODO 现在想实现：修改标签，修改之后的标签和备注不能和数据库里面的重复
+        //  但是现在遇到的问题是：只修改标签的话，备注没动，查数据库还是会查到一样的备注（即自身的），导致判断失误
+        // 返回
         return ResponseResult.okResult();
     }
 }
