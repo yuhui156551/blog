@@ -7,6 +7,8 @@ import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.dto.TagListDto;
 import com.yuhui.domain.entity.Tag;
 import com.yuhui.domain.vo.PageVo;
+import com.yuhui.enums.AppHttpCodeEnum;
+import com.yuhui.exception.SystemException;
 import com.yuhui.mapper.TagMapper;
 import com.yuhui.service.TagService;
 import org.springframework.stereotype.Service;
@@ -34,5 +36,30 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         // 返回
         PageVo pageVo = new PageVo(page.getRecords(), page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult addTag(TagListDto tagListDto) {
+        Tag tag = new Tag();
+        // 内容不能为空
+        if(!StringUtils.hasText(tagListDto.getName()) || !StringUtils.hasText(tagListDto.getRemark())){
+            throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
+        }
+        // 不能重复（可以不写，一般后台自己管理，不会添加已有的标签其实）
+        LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
+        if(count(queryWrapper.eq(Tag::getName, tagListDto.getName())) > 0){
+            throw new SystemException(AppHttpCodeEnum.NAME_EXIST);
+        }
+        // 注意此处需要new一个新的wrapper
+        LambdaQueryWrapper<Tag> queryWrapper2 = new LambdaQueryWrapper<>();
+        if(count(queryWrapper2.eq(Tag::getRemark, tagListDto.getRemark())) > 0){
+            throw new SystemException(AppHttpCodeEnum.REMARK_EXIST);
+        }
+        // 设置值
+        tag.setName(tagListDto.getName());
+        tag.setRemark(tagListDto.getRemark());
+        // 保存并返回
+        save(tag);
+        return ResponseResult.okResult();
     }
 }
