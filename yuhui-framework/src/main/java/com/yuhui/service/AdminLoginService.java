@@ -2,8 +2,8 @@ package com.yuhui.service;
 
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.User;
-import com.yuhui.vo.AdminUserInfoVo;
-import com.yuhui.vo.RoutersVo;
+import com.yuhui.domain.vo.AdminUserInfoVo;
+import com.yuhui.domain.vo.RoutersVo;
 
 /**
  * @author yuhui

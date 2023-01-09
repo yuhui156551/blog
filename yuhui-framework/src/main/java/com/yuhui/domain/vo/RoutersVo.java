@@ -1,4 +1,4 @@
-package com.yuhui.vo;
+package com.yuhui.domain.vo;
 
 import com.yuhui.domain.entity.Menu;
 import lombok.AllArgsConstructor;

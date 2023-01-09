@@ -10,7 +10,7 @@ import com.yuhui.mapper.UserMapper;
 import com.yuhui.service.UserService;
 import com.yuhui.utils.BeanCopyUtils;
 import com.yuhui.utils.SecurityUtils;
-import com.yuhui.vo.UserInfoVo;
+import com.yuhui.domain.vo.UserInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

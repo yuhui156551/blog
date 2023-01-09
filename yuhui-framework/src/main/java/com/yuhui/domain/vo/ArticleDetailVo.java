@@ -1,4 +1,4 @@
-package com.yuhui.vo;
+package com.yuhui.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

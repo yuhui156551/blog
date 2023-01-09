@@ -1,17 +1,16 @@
-package com.yuhui.vo;
+package com.yuhui.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author yuhui
- * @date 2023/1/1 21:27
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryVo {
+public class HotArticleVo {
     private Long id;
-    private String name;
+    //标题
+    private String title;
+    //访问量
+    private Long viewCount;
 }

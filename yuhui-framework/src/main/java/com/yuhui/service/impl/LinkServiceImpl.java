@@ -8,7 +8,7 @@ import com.yuhui.domain.entity.Link;
 import com.yuhui.mapper.LinkMapper;
 import com.yuhui.service.LinkService;
 import com.yuhui.utils.BeanCopyUtils;
-import com.yuhui.vo.LinkVo;
+import com.yuhui.domain.vo.LinkVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.yuhui.vo;
+package com.yuhui.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;

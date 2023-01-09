@@ -10,7 +10,7 @@ import com.yuhui.mapper.CategoryMapper;
 import com.yuhui.service.ArticleService;
 import com.yuhui.service.CategoryService;
 import com.yuhui.utils.BeanCopyUtils;
-import com.yuhui.vo.CategoryVo;
+import com.yuhui.domain.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
