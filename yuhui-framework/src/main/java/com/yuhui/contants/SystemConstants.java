@@ -31,6 +31,10 @@ public class SystemConstants
      */
     public static final String ARTICLE_VIEW_COUNT_KEY = "article:viewCount:";
     /**
+     *  后台登录key
+     */
+    public static final String ADMIN_LOGIN_KEY = "admin:login:";
+    /**
      *  状态正常
      */
     public static final String STATUS_NORMAL = "0";

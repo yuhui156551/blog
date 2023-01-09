@@ -45,6 +45,11 @@ public class AdminLoginController {
         return adminLoginService.login(user);
     }
 
+    @PostMapping("/user/logout")
+    public ResponseResult logout(){
+        return adminLoginService.logout();
+    }
+
     @GetMapping("/getInfo")
     public ResponseResult<AdminUserInfoVo> getInfo(){
         return adminLoginService.getInfo();

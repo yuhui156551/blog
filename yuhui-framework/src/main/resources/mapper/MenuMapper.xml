@@ -20,7 +20,7 @@
         FROM
             sys_menu m
         WHERE
-            m.`menu_type` IN ('C','F') AND
+            m.`menu_type` IN ('C','M') AND
             m.`status` = 0 AND
             m.`del_flag` = 0
         ORDER BY
@@ -35,7 +35,7 @@
                 LEFT JOIN `sys_menu` m ON m.`id` = rm.`menu_id`
         WHERE
             ur.`user_id` = #{userId} AND
-            m.`menu_type` IN ('C','F') AND
+            m.`menu_type` IN ('C','M') AND
             m.`status` = 0 AND
             m.`del_flag` = 0
         ORDER BY

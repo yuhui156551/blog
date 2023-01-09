@@ -1,5 +1,6 @@
 package com.yuhui.service.impl;
 
+import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.LoginUser;
 import com.yuhui.domain.entity.Menu;
@@ -56,7 +57,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         String userId = loginUser.getUser().getId().toString();
         String token = JwtUtil.createJWT(userId);
         // 用户信息存入Redis
-        redisCache.setCacheObject("admin:login:" + userId, loginUser);
+        redisCache.setCacheObject(SystemConstants.ADMIN_LOGIN_KEY + userId, loginUser);
 //        // 封装token UserInfo 返回
 //        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
 //        BlogUserLoginVo vo = new BlogUserLoginVo(token, userInfoVo);
@@ -92,5 +93,14 @@ public class AdminLoginServiceImpl implements AdminLoginService {
         // 封装返回
         RoutersVo routersVo = new RoutersVo(menus);
         return ResponseResult.okResult(routersVo);
+    }
+
+    @Override
+    public ResponseResult logout() {
+        // 获取userid，删除redis里面的用户信息
+        Long userId = SecurityUtils.getUserId();
+        redisCache.deleteObject(SystemConstants.ADMIN_LOGIN_KEY + userId);
+        // 返回
+        return ResponseResult.okResult();
     }
 }
