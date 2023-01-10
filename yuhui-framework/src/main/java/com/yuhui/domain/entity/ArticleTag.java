@@ -19,7 +19,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @NoArgsConstructor
 @TableName("sg_article_tag")
 public class ArticleTag  implements Serializable{
-    //
+    // TODO 这是何物？
     private static final long serialVersionUID = 625337492348897098L;
     //文章id
     private Long articleId;

@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.dto.CategoryDto;
 import com.yuhui.domain.dto.CategoryListDto;
 import com.yuhui.domain.entity.Article;
 import com.yuhui.domain.entity.Category;
+import com.yuhui.domain.entity.Tag;
 import com.yuhui.domain.vo.CategoryListVo;
 import com.yuhui.domain.vo.PageVo;
+import com.yuhui.enums.AppHttpCodeEnum;
+import com.yuhui.exception.SystemException;
 import com.yuhui.mapper.CategoryMapper;
 import com.yuhui.service.ArticleService;
 import com.yuhui.service.CategoryService;
@@ -34,6 +38,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Autowired
     private ArticleService articleService;
+
     @Override
     public ResponseResult getCategoryList() {
         // 查询状态为已发布的文章表
@@ -67,5 +72,49 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         // 封装成pageVo返回
         List<CategoryListVo> categoryListVos = BeanCopyUtils.copyBeanList(page.getRecords(), CategoryListVo.class);
         return ResponseResult.okResult(new PageVo(categoryListVos, page.getTotal()));
+    }
+
+    @Override
+    public ResponseResult updateCategory(CategoryListVo categoryListVo) {
+        // 内容不能为空
+        if (!StringUtils.hasText(categoryListVo.getName())
+                || !StringUtils.hasText(categoryListVo.getDescription())) {
+            throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
+        }
+        // 根据id获取旧数据
+        Category oldCategory = getById(categoryListVo.getId());
+        // 若传递过来的数据和旧数据不一样，说明进行了修改
+        if (!oldCategory.getName().equals(categoryListVo.getName())) {
+            // 判断分类名是否重复
+            LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+            if (count(queryWrapper.eq(Category::getName, categoryListVo.getName())) > 0) {
+                throw new SystemException(AppHttpCodeEnum.CATEGORY_NAME_EXIST);
+            }
+        }
+        // 修改数据
+        Category category = BeanCopyUtils.copyBean(categoryListVo, Category.class);
+        // 根据id更新
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Category::getId, categoryListVo.getId());
+        update(category, queryWrapper);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult addCategory(CategoryDto categoryDto) {
+        // 内容不能为空
+        if (!StringUtils.hasText(categoryDto.getName())
+                || !StringUtils.hasText(categoryDto.getDescription())) {
+            throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
+        }
+        // 判断分类名是否重复
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        if (count(queryWrapper.eq(Category::getName, categoryDto.getName())) > 0) {
+            throw new SystemException(AppHttpCodeEnum.CATEGORY_NAME_EXIST);
+        }
+        // 设置值并保存
+        Category category = BeanCopyUtils.copyBean(categoryDto, Category.class);
+        save(category);
+        return ResponseResult.okResult();
     }
 }
