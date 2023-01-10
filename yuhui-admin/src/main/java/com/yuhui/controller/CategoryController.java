@@ -3,6 +3,7 @@ package com.yuhui.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.dto.CategoryListDto;
 import com.yuhui.domain.entity.Category;
 import com.yuhui.domain.vo.CategoryVo;
 import com.yuhui.service.CategoryService;
@@ -36,4 +37,8 @@ public class CategoryController {
         return ResponseResult.okResult(BeanCopyUtils.copyBeanList(categories, CategoryVo.class));
     }
 
+    @GetMapping("/list")
+    public ResponseResult list(Integer pageNum, Integer pageSize, CategoryListDto categoryListDto){
+        return categoryService.pageCategoryList(pageNum, pageSize, categoryListDto);
+    }
 }

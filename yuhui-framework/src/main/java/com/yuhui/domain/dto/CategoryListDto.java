@@ -1,4 +1,4 @@
-package com.yuhui.domain.vo;
+package com.yuhui.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author yuhui
- * @date 2023/1/1 21:27
+ * @date 2023/1/10 18:40
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class CategoryVo {
-    private Long id;
+@NoArgsConstructor
+public class CategoryListDto {
+    // 分类名
     private String name;
-    // 描述
-    private String description;
+    // 状态
+    private String status;
 }

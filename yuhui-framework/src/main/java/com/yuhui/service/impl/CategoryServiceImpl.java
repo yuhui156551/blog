@@ -1,11 +1,15 @@
 package com.yuhui.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.dto.CategoryListDto;
 import com.yuhui.domain.entity.Article;
 import com.yuhui.domain.entity.Category;
+import com.yuhui.domain.vo.CategoryListVo;
+import com.yuhui.domain.vo.PageVo;
 import com.yuhui.mapper.CategoryMapper;
 import com.yuhui.service.ArticleService;
 import com.yuhui.service.CategoryService;
@@ -13,6 +17,7 @@ import com.yuhui.utils.BeanCopyUtils;
 import com.yuhui.domain.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -47,5 +52,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         // 封装vo返回
         List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
         return ResponseResult.okResult(categoryVos);
+    }
+
+    @Override
+    public ResponseResult pageCategoryList(Integer pageNum, Integer pageSize, CategoryListDto categoryListDto) {
+        // 根据状态进行查询
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(StringUtils.hasText(categoryListDto.getStatus()), Category::getStatus, categoryListDto.getStatus());
+        // 根据分类名进行模糊查询
+        queryWrapper.like(StringUtils.hasText(categoryListDto.getName()), Category::getName, categoryListDto.getName());
+        // 分页查询
+        Page<Category> page = new Page<>(pageNum, pageSize);
+        page(page, queryWrapper);
+        // 封装成pageVo返回
+        List<CategoryListVo> categoryListVos = BeanCopyUtils.copyBeanList(page.getRecords(), CategoryListVo.class);
+        return ResponseResult.okResult(new PageVo(categoryListVos, page.getTotal()));
     }
 }

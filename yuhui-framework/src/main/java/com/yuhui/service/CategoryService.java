@@ -2,6 +2,7 @@ package com.yuhui.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.dto.CategoryListDto;
 import com.yuhui.domain.entity.Category;
 
 
@@ -14,4 +15,6 @@ import com.yuhui.domain.entity.Category;
 public interface CategoryService extends IService<Category> {
 
     ResponseResult getCategoryList();
+
+    ResponseResult pageCategoryList(Integer pageNum, Integer pageSize, CategoryListDto categoryListDto);
 }
