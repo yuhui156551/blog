@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sun.xml.internal.bind.v2.TODO;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.dto.TagDto;
 import com.yuhui.domain.dto.TagListDto;
 import com.yuhui.domain.entity.Tag;
 import com.yuhui.domain.vo.PageVo;
@@ -67,36 +68,36 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     }
 
     @Override
-    public ResponseResult updateTag(TagVo tagVo) {
+    public ResponseResult updateTag(TagDto tagDto) {
         // 内容不能为空
-        if(!StringUtils.hasText(tagVo.getName()) || !StringUtils.hasText(tagVo.getRemark())){
+        if(!StringUtils.hasText(tagDto.getName()) || !StringUtils.hasText(tagDto.getRemark())){
             throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
         }
         // TODO 现在想实现：修改标签，修改之后的标签和备注不能和数据库里面的重复
         //  但是现在遇到的问题是：如果和自己本身旧数据一样的话，也会抛重复异常，导致判断失误
         //  但是不巧的是：爷实现了，代码如下
         // 根据id获取数据库tag
-        Tag oldTag = getById(tagVo.getId());
+        Tag oldTag = getById(tagDto.getId());
         // 如果传过来的name和oldTag里的name不一样，说明进行了修改
-        if(!oldTag.getName().equals(tagVo.getName())){
+        if(!oldTag.getName().equals(tagDto.getName())){
             // 判断name是否重复
             LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
-            if(count(queryWrapper.eq(Tag::getName, tagVo.getName())) > 0){
+            if(count(queryWrapper.eq(Tag::getName, tagDto.getName())) > 0){
                 throw new SystemException(AppHttpCodeEnum.NAME_EXIST);
             }
         }
-        if(!oldTag.getRemark().equals(tagVo.getRemark())){
+        if(!oldTag.getRemark().equals(tagDto.getRemark())){
             // 判断remark是否重复
             LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
-            if(count(queryWrapper.eq(Tag::getRemark, tagVo.getRemark())) > 0){
+            if(count(queryWrapper.eq(Tag::getRemark, tagDto.getRemark())) > 0){
                 throw new SystemException(AppHttpCodeEnum.REMARK_EXIST);
             }
         }
         // 设置值
-        Tag tag = BeanCopyUtils.copyBean(tagVo, Tag.class);
+        Tag tag = BeanCopyUtils.copyBean(tagDto, Tag.class);
         // 根据id更新tag
         LambdaQueryWrapper<Tag> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Tag::getId, tagVo.getId());
+        lambdaQueryWrapper.eq(Tag::getId, tagDto.getId());
         update(tag, lambdaQueryWrapper);
         // 返回
         return ResponseResult.okResult();
