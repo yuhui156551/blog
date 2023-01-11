@@ -16,6 +16,7 @@ import com.yuhui.service.CategoryService;
 import com.yuhui.utils.BeanCopyUtils;
 import com.yuhui.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -75,6 +76,7 @@ public class CategoryController {
     }
 
     @GetMapping("/export")
+    @PreAuthorize("@ps.hasPermission('content:category:export')")
 //    @SystemLog(businessName = "分类导出") 此处加了会报错
     public void export(HttpServletResponse response){
         categoryService.export(response);
