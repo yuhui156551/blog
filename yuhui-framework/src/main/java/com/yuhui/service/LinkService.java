@@ -2,6 +2,9 @@ package com.yuhui.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.dto.LinkDto;
+import com.yuhui.domain.dto.LinkListDto;
+import com.yuhui.domain.dto.LinkStatusDto;
 import com.yuhui.domain.entity.Link;
 
 
@@ -14,4 +17,10 @@ import com.yuhui.domain.entity.Link;
 public interface LinkService extends IService<Link> {
 
     ResponseResult getAllLink();
+
+    ResponseResult pageLinkList(Integer pageNum, Integer pageSize, LinkListDto linkListDto);
+
+    ResponseResult updateLink(LinkDto linkDto);
+
+    ResponseResult changeLinkStatus(LinkStatusDto linkStatusDto);
 }

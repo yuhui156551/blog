@@ -1,18 +1,17 @@
-package com.yuhui.domain.vo;
+package com.yuhui.domain.dto;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * @author yuhui
- * @date 2023/1/2 20:15
+ * @date 2023/1/11 17:02
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class LinkVo {
+@NoArgsConstructor
+public class LinkDto {
     private Long id;
     private String name;
     private String logo;
