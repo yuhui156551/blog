@@ -6,6 +6,10 @@ import com.yuhui.domain.dto.CategoryDto;
 import com.yuhui.domain.dto.CategoryListDto;
 import com.yuhui.domain.entity.Category;
 import com.yuhui.domain.vo.CategoryListVo;
+import com.yuhui.domain.vo.CategoryVo;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 /**
@@ -23,4 +27,8 @@ public interface CategoryService extends IService<Category> {
     ResponseResult updateCategory(CategoryListVo categoryListVo);
 
     ResponseResult addCategory(CategoryDto categoryDto);
+
+    List<CategoryVo> listAllCategory();
+
+    void export(HttpServletResponse response);
 }

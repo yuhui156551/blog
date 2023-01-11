@@ -1,5 +1,7 @@
 package com.yuhui.service.impl;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,6 +13,7 @@ import com.yuhui.domain.entity.Article;
 import com.yuhui.domain.entity.Category;
 import com.yuhui.domain.entity.Tag;
 import com.yuhui.domain.vo.CategoryListVo;
+import com.yuhui.domain.vo.ExcelCategoryVo;
 import com.yuhui.domain.vo.PageVo;
 import com.yuhui.enums.AppHttpCodeEnum;
 import com.yuhui.exception.SystemException;
@@ -19,10 +22,12 @@ import com.yuhui.service.ArticleService;
 import com.yuhui.service.CategoryService;
 import com.yuhui.utils.BeanCopyUtils;
 import com.yuhui.domain.vo.CategoryVo;
+import com.yuhui.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -116,5 +121,38 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         Category category = BeanCopyUtils.copyBean(categoryDto, Category.class);
         save(category);
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public List<CategoryVo> listAllCategory() {
+        // 返回状态正常的分类
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Category::getStatus, SystemConstants.STATUS_NORMAL);
+        List<Category> categories = list();
+        // 封装vo并返回
+        List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
+        return categoryVos;
+    }
+
+    @Override
+    public void export(HttpServletResponse response) {
+        try {
+            // 设置参数
+            WebUtils.setDownLoadHeader("分类.xlsx", response);
+            // 获取数据
+            List<Category> categorys = list();
+            List<ExcelCategoryVo> excelCategoryVos = BeanCopyUtils.copyBeanList(categorys, ExcelCategoryVo.class);
+            // 写入excel
+            EasyExcel.write(response.getOutputStream(), ExcelCategoryVo.class)
+                    .autoCloseStream(Boolean.FALSE).sheet("分类导出")
+                    .doWrite(excelCategoryVos);
+        } catch (Exception e) {
+//            throw new RuntimeException(e);
+            // 如果出现异常，返回json
+            // 重置response
+//            response.reset();
+            ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR);
+            WebUtils.renderString(response, JSON.toJSONString(result));
+        }
     }
 }

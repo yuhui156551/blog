@@ -1,6 +1,8 @@
 package com.yuhui.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.yuhui.annotation.SystemLog;
 import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.dto.CategoryDto;
@@ -8,11 +10,16 @@ import com.yuhui.domain.dto.CategoryListDto;
 import com.yuhui.domain.entity.Category;
 import com.yuhui.domain.vo.CategoryListVo;
 import com.yuhui.domain.vo.CategoryVo;
+import com.yuhui.domain.vo.ExcelCategoryVo;
+import com.yuhui.enums.AppHttpCodeEnum;
 import com.yuhui.service.CategoryService;
 import com.yuhui.utils.BeanCopyUtils;
+import com.yuhui.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,12 +35,7 @@ public class CategoryController {
 
     @GetMapping("/listAllCategory")
     public ResponseResult listAllCategory(){
-        // 返回状态正常的分类
-        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Category::getStatus, SystemConstants.STATUS_NORMAL);
-        List<Category> categories = categoryService.list();
-        // 封装vo并返回
-        return ResponseResult.okResult(BeanCopyUtils.copyBeanList(categories, CategoryVo.class));
+        return ResponseResult.okResult(categoryService.listAllCategory());
     }
 
     @GetMapping("/list")
@@ -70,5 +72,11 @@ public class CategoryController {
     public ResponseResult deleteCategoryList(@RequestParam Long[] ids){
         System.out.println(ids);
         return ResponseResult.okResult();
+    }
+
+    @GetMapping("/export")
+//    @SystemLog(businessName = "分类导出") 此处加了会报错
+    public void export(HttpServletResponse response){
+        categoryService.export(response);
     }
 }

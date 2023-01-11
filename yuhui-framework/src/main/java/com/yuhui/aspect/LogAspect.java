@@ -34,8 +34,10 @@ public class LogAspect {
         Object ret;
         try {
             handleBefore(pjp);
+            long startTime = System.currentTimeMillis();
             // 此处要选择抛出异常而非catch，否则异常都在此处catch，统一异常处理失效
             ret = pjp.proceed();
+            log.info("Method execution time is : {}", System.currentTimeMillis() - startTime);
             handleAfter(ret);
         } finally {
             // 结束后换行

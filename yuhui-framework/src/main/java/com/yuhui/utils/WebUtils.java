@@ -28,7 +28,7 @@ public class WebUtils {
     }
 
     /**
-     * Excel文件下载
+     * Excel文件下载--设置返回的参数
      */
     public static void setDownLoadHeader(String filename, HttpServletResponse response) throws UnsupportedEncodingException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
