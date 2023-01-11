@@ -8,6 +8,7 @@ import com.yuhui.mapper.MenuMapper;
 import com.yuhui.service.MenuService;
 import com.yuhui.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<String> selectPermsByUserId(Long id) {
         // 若用户id为1（yh），代表是超级管理员，返回所有权限
-        if(SecurityUtils.isAdmin()){
+        if (SecurityUtils.isAdmin()) {
             LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
             // 菜单 按钮
             queryWrapper.in(Menu::getMenuType, "C", "F");// 本该定义为常量，这里我偷懒了
@@ -45,16 +46,40 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<Menu> selectRouterMenuTreeByUserId(Long userId) {
         MenuMapper menuMapper = getBaseMapper();
         List<Menu> menus = null;
-        if(SecurityUtils.isAdmin()){
+        if (SecurityUtils.isAdmin()) {
             // 如果是管理员，返回符合要求的menu
             menus = menuMapper.selectAllRouterMenu();
-        }else{
+        } else {
             // 否则，返回所具有的menu
             menus = menuMapper.selectRouterMenuTreeByUserId(userId);
         }
         // 构建tree结构
-        List<Menu> menuTree = builderMenuTree(menus,0L);
+        List<Menu> menuTree = builderMenuTree(menus, 0L);
         return menuTree;
+    }
+
+    @Override
+    public List<Menu> selectMenuList(Menu menu) {
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        // menuName模糊查询
+        queryWrapper.like(StringUtils.hasText(menu.getMenuName()), Menu::getMenuName, menu.getMenuName());
+        queryWrapper.eq(StringUtils.hasText(menu.getStatus()), Menu::getStatus, menu.getStatus());
+        // 排序 parent_id和order_num
+        queryWrapper.orderByAsc(Menu::getParentId, Menu::getOrderNum);
+        List<Menu> menus = list(queryWrapper);
+        return menus;
+    }
+
+    /**
+     * 根据菜单id判断是否含有子菜单
+     * @param id 菜单id
+     * @return
+     */
+    @Override
+    public boolean hasChild(Long id) {
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Menu::getParentId, id);
+        return count(queryWrapper) > 0;
     }
 
     /**
