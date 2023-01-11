@@ -3,6 +3,7 @@ package com.yuhui.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.dto.AddArticleDto;
+import com.yuhui.domain.dto.ArticleDto;
 import com.yuhui.domain.entity.Article;
 
 /**
@@ -19,4 +20,8 @@ public interface ArticleService extends IService<Article> {
     ResponseResult updateViewCount(Long id);
 
     ResponseResult add(AddArticleDto articleDto);
+
+    ResponseResult pageArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto);
+
+    ResponseResult updateArticle(AddArticleDto articleDto);
 }

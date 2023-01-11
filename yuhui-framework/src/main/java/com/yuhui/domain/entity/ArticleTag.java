@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.experimental.Accessors;
+
 /**
  * 文章标签关联表(ArticleTag)表实体类
  *
@@ -18,6 +20,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sg_article_tag")
+@Accessors(chain = true)
 public class ArticleTag  implements Serializable{
     // TODO 这是何物？
     private static final long serialVersionUID = 625337492348897098L;
