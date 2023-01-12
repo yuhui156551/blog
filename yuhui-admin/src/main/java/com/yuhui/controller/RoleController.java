@@ -20,13 +20,11 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-
-    /*@GetMapping("/listAllRole")
-    @SystemLog(businessName = "获取角色管理列表")
+    @GetMapping("/listAllRole")
+    @SystemLog(businessName = "获取所有角色列表")
     public ResponseResult listAllRole(){
-        List<Role> roles = roleService.selectRoleAll();
-        return ResponseResult.okResult(roles);
-    }*/
+        return ResponseResult.okResult(roleService.selectRoleAll());
+    }
 
     @GetMapping("/{roleId}")
     @SystemLog(businessName = "角色信息回显")
@@ -57,7 +55,7 @@ public class RoleController {
     }
 
     @GetMapping("/list")
-    @SystemLog(businessName = "角色管理列表")
+    @SystemLog(businessName = "分页查询角色管理列表")
     public ResponseResult list(Role role, Integer pageNum, Integer pageSize) {
         return roleService.pageRoleList(role, pageNum, pageSize);
     }

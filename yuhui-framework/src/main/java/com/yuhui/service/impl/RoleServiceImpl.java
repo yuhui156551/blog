@@ -3,6 +3,7 @@ package com.yuhui.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Role;
 import com.yuhui.domain.entity.RoleMenu;
@@ -79,6 +80,19 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         updateById(role);
         roleMenuService.deleteRoleMenuByRoleId(role.getId());
         insertRoleMenu(role);
+    }
+
+    @Override
+    public List<Role> selectRoleAll() {
+        // 状态：正常
+        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Role::getStatus, SystemConstants.STATUS_NORMAL);
+        return list(queryWrapper);
+    }
+
+    @Override
+    public List<Long> selectRoleIdByUserId(Long userId) {
+        return getBaseMapper().selectRoleIdByUserId(userId);
     }
 
     /**

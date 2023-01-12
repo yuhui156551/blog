@@ -5,7 +5,7 @@ import com.yuhui.enums.AppHttpCodeEnum;
 
 import java.io.Serializable;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)// 为null的字段不序列化
 public class ResponseResult<T> implements Serializable {
     private Integer code;
     private String msg;
