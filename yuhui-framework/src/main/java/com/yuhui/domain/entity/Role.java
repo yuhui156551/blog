@@ -45,4 +45,7 @@ public class Role  {
     private Date updateTime;
     // 备注
     private String remark;
+    // 关联菜单id数组
+    @TableField(exist = false)
+    private Long[] menuIds;
 }

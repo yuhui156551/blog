@@ -5,14 +5,20 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Role;
+import com.yuhui.domain.entity.RoleMenu;
 import com.yuhui.domain.vo.PageVo;
 import com.yuhui.mapper.RoleMapper;
+import com.yuhui.service.RoleMenuService;
 import com.yuhui.service.RoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 角色信息表(Role)表服务实现类
@@ -22,7 +28,14 @@ import java.util.List;
  */
 @Service("roleService")
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
+    @Resource
+    private RoleMenuService roleMenuService;
 
+    /**
+     * 根据用户id获取roleKey
+     * @param id userId
+     * @return
+     */
     @Override
     public List<String> selectRoleKeyByUserId(Long id) {
         // 如果是管理员，返回的集合中只需要有“admin”
@@ -51,7 +64,31 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
+    @Transactional
     public void insertRole(Role role) {
+        save(role);
+        // 如果有菜单值，则插入role_menu表
+        if(role.getMenuIds() != null && role.getMenuIds().length > 0){
+            insertRoleMenu(role);
+        }
+    }
 
+    @Override
+    public void updateRole(Role role) {
+        // 先删除之前的role_menu表当中的数据，再插入role_menu表
+        updateById(role);
+        roleMenuService.deleteRoleMenuByRoleId(role.getId());
+        insertRoleMenu(role);
+    }
+
+    /**
+     * 插入role_menu表
+     * @param role 角色数据
+     */
+    private void insertRoleMenu(Role role){
+        List<RoleMenu> roleMenuList = Arrays.stream(role.getMenuIds())
+                .map(menuId -> new RoleMenu(role.getId(), menuId))
+                .collect(Collectors.toList());
+        roleMenuService.saveBatch(roleMenuList);
     }
 }

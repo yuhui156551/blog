@@ -8,11 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="yuhui-framework" />
+        <module name="sangeng-framework" />
+        <module name="security" />
+        <module name="sangeng-blog" />
+        <module name="sangeng-admin" />
+        <module name="reggie" />
         <module name="dianping" />
         <module name="yuhui-blog" />
-        <module name="security" />
         <module name="yuhui-admin" />
-        <module name="reggie" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

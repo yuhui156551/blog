@@ -28,21 +28,20 @@ public class RoleController {
         return ResponseResult.okResult(roles);
     }*/
 
-    @GetMapping(value = "/{roleId}")
-    public ResponseResult getInfo(@PathVariable Long roleId) {
+    @GetMapping("/{roleId}")
+    @SystemLog(businessName = "角色信息回显")
+    public ResponseResult getInfo(@PathVariable("roleId") Long roleId) {
         Role role = roleService.getById(roleId);
-        return ResponseResult.okResult(role);
+        return ResponseResult.okResult(role);// 此处应当转成Vo返回
     }
 
-    /**
-     * 修改保存角色
-     */
-    /*@PutMapping
-    public ResponseResult edit(@RequestBody Role role)
-    {
+    @PutMapping
+    @SystemLog(businessName = "修改角色")
+    public ResponseResult updateRole(@RequestBody Role role) {
         roleService.updateRole(role);
         return ResponseResult.okResult();
-    }*/
+    }
+
     @DeleteMapping("/{id}")
     @SystemLog(businessName = "删除角色")
     public ResponseResult remove(@PathVariable("id") Long id) {

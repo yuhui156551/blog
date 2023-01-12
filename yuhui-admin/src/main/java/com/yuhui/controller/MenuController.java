@@ -5,6 +5,7 @@ import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Menu;
 import com.yuhui.domain.vo.MenuTreeVo;
 import com.yuhui.domain.vo.MenuVo;
+import com.yuhui.domain.vo.RoleMenuTreeSelectVo;
 import com.yuhui.service.MenuService;
 import com.yuhui.utils.BeanCopyUtils;
 import com.yuhui.utils.SystemConverter;
@@ -33,6 +34,20 @@ public class MenuController {
         return ResponseResult.okResult(options);
     }
 
+    @GetMapping("/roleMenuTreeselect/{roleId}")
+    @SystemLog(businessName = "加载角色菜单列表树")
+    public ResponseResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId) {
+        // 获取菜单数据
+        List<Menu> menus = menuService.selectMenuList(new Menu());
+        // 根据角色id获取对应菜单id集合
+        List<Long> checkedKeys = menuService.selectMenuListByRoleId(roleId);
+        // 构造树结构
+        List<MenuTreeVo> menuTreeVos = SystemConverter.buildMenuSelectTree(menus);
+        // 将 角色id所关联的菜单id 和 所有菜单 返回给前端处理显示
+        RoleMenuTreeSelectVo vo = new RoleMenuTreeSelectVo(checkedKeys, menuTreeVos);
+        return ResponseResult.okResult(vo);
+    }
+
     @GetMapping("/list")
     @SystemLog(businessName = "菜单列表")
     public ResponseResult list(Menu menu) {
@@ -43,14 +58,14 @@ public class MenuController {
 
     @PostMapping
     @SystemLog(businessName = "新增菜单")
-    public ResponseResult addMenu(@RequestBody Menu menu){// 其实应该设置dto，奈何我是懒狗
+    public ResponseResult addMenu(@RequestBody Menu menu) {// 其实应该设置dto，奈何我是懒狗
         menuService.save(menu);
         return ResponseResult.okResult();
     }
 
     @GetMapping("/{id}")
     @SystemLog(businessName = "回显数据")
-    public ResponseResult selectMenu(@PathVariable("id") Long id){
+    public ResponseResult selectMenu(@PathVariable("id") Long id) {
         MenuVo menuVo = BeanCopyUtils.copyBean(menuService.getById(id), MenuVo.class);
         return ResponseResult.okResult(menuVo);
     }
@@ -60,9 +75,9 @@ public class MenuController {
     public ResponseResult updateMenu(@RequestBody Menu menu) {
         // 上级菜单不能选择自身
         if (menu.getId().equals(menu.getParentId())) {
-            return ResponseResult.errorResult(500,"修改菜单'" + menu.getMenuName() + "'失败，上级菜单不能选择自己");
+            return ResponseResult.errorResult(500, "修改菜单'" + menu.getMenuName() + "'失败，上级菜单不能选择自己");
         }
-        menuService.updateById(menu);// 应该防止空值，但是我是后台管理，尽量主观避免吧（其实是因为我懒）
+        menuService.updateById(menu);// 前端已防止空值，这里就懒得弄了
         return ResponseResult.okResult();
     }
 
@@ -71,7 +86,7 @@ public class MenuController {
     public ResponseResult deleteMenu(@PathVariable("id") Long id) {
         // 如有子菜单，不能删除
         if (menuService.hasChild(id)) {
-            return ResponseResult.errorResult(500,"存在子菜单，无法删除！");
+            return ResponseResult.errorResult(500, "存在子菜单，无法删除！");
         }
         menuService.removeById(id);
         return ResponseResult.okResult();

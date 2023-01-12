@@ -88,6 +88,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     /**
+     * 根据角色id获取对应菜单id集合
+     * @param roleId 角色id
+     * @return
+     */
+    @Override
+    public List<Long> selectMenuListByRoleId(Long roleId) {
+        return getBaseMapper().selectMenuListByRoleId(roleId);
+    }
+
+    /**
      * 构建tree
      */
     private List<Menu> builderMenuTree(List<Menu> menus, Long parentId) {
