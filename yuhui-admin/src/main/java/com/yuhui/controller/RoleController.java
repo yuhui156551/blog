@@ -29,8 +29,7 @@ public class RoleController {
     }*/
 
     @GetMapping(value = "/{roleId}")
-    public ResponseResult getInfo(@PathVariable Long roleId)
-    {
+    public ResponseResult getInfo(@PathVariable Long roleId) {
         Role role = roleService.getById(roleId);
         return ResponseResult.okResult(role);
     }
@@ -44,7 +43,6 @@ public class RoleController {
         roleService.updateRole(role);
         return ResponseResult.okResult();
     }*/
-
     @DeleteMapping("/{id}")
     @SystemLog(businessName = "删除角色")
     public ResponseResult remove(@PathVariable("id") Long id) {
@@ -52,26 +50,22 @@ public class RoleController {
         return ResponseResult.okResult();
     }
 
-
-    /**
-     * 新增角色
-     */
-    /*@PostMapping
-    public ResponseResult add( @RequestBody Role role)
-    {
+    @PostMapping
+    @SystemLog(businessName = "新增角色")
+    public ResponseResult add(@RequestBody Role role) {
         roleService.insertRole(role);
         return ResponseResult.okResult();
+    }
 
-    }*/
     @GetMapping("/list")
     @SystemLog(businessName = "角色管理列表")
     public ResponseResult list(Role role, Integer pageNum, Integer pageSize) {
-        return roleService.pageRoleList(role,pageNum,pageSize);
+        return roleService.pageRoleList(role, pageNum, pageSize);
     }
 
     @PutMapping("/changeStatus")
     @SystemLog(businessName = "修改角色状态")
-    public ResponseResult changeStatus(@RequestBody ChangeRoleStatusDto roleStatusDto){
+    public ResponseResult changeStatus(@RequestBody ChangeRoleStatusDto roleStatusDto) {
         Role role = new Role();
         role.setId(roleStatusDto.getRoleId());
         role.setStatus(roleStatusDto.getStatus());

@@ -3,9 +3,11 @@ package com.yuhui.controller;
 import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Menu;
+import com.yuhui.domain.vo.MenuTreeVo;
 import com.yuhui.domain.vo.MenuVo;
 import com.yuhui.service.MenuService;
 import com.yuhui.utils.BeanCopyUtils;
+import com.yuhui.utils.SystemConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +23,15 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-   /* @GetMapping("/treeselect")
+    @GetMapping("/treeselect")
     @SystemLog(businessName = "获取菜单下拉树列表")
-    public ResponseResult treeselect() {
-        //复用之前的selectMenuList方法。方法需要参数，参数可以用来进行条件查询，而这个方法不需要条件，所以直接new Menu()传入
+    public ResponseResult treeSelect() {
+        // 获取菜单数据。方法需要参数，参数可以用来进行条件查询，而这个方法不需要条件，所以直接new Menu()传入
         List<Menu> menus = menuService.selectMenuList(new Menu());
-        List<MenuTreeVo> options =  SystemConverter.buildMenuSelectTree(menus);
+        // 构造树结构返回给前端显示
+        List<MenuTreeVo> options = SystemConverter.buildMenuSelectTree(menus);
         return ResponseResult.okResult(options);
-    }*/
+    }
 
     @GetMapping("/list")
     @SystemLog(businessName = "菜单列表")

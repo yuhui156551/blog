@@ -49,4 +49,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         // 封装vo返回
         return ResponseResult.okResult(new PageVo(page.getRecords(), page.getTotal()));
     }
+
+    @Override
+    public void insertRole(Role role) {
+
+    }
 }

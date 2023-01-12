@@ -58,6 +58,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return menuTree;
     }
 
+    /**
+     * 获取菜单列表
+     * @param menu 传入的状态或菜单名
+     * @return
+     */
     @Override
     public List<Menu> selectMenuList(Menu menu) {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
