@@ -1,6 +1,7 @@
 package com.yuhui.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Role;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
     List<String> selectRoleKeyByUserId(Long id);
+
+    ResponseResult pageRoleList(Role role, Integer pageNum, Integer pageSize);
 }
