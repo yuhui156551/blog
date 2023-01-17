@@ -35,43 +35,48 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/listAllCategory")
+    @SystemLog(businessName = "获取所有分类")
     public ResponseResult listAllCategory(){
         return ResponseResult.okResult(categoryService.listAllCategory());
     }
 
     @GetMapping("/list")
+    @SystemLog(businessName = "分页查询分类列表")
     public ResponseResult list(Integer pageNum, Integer pageSize, CategoryListDto categoryListDto){
         return categoryService.pageCategoryList(pageNum, pageSize, categoryListDto);
     }
 
     @PostMapping
+    @SystemLog(businessName = "新增分类")
     public ResponseResult addCategory(@RequestBody CategoryDto categoryDto){
         return categoryService.addCategory(categoryDto);
     }
 
     @GetMapping("/{id}")
+    @SystemLog(businessName = "回显分类数据")
     public ResponseResult selectCategory(@PathVariable("id") Long id){
         return ResponseResult.okResult(BeanCopyUtils.copyBean(categoryService.getById(id), CategoryListVo.class));
     }
 
     @PutMapping
+    @SystemLog(businessName = "修改分类")
     public ResponseResult updateCategory(@RequestBody CategoryListVo categoryListVo){
         return categoryService.updateCategory(categoryListVo);
     }
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseResult deleteCategory(@PathVariable("id") Long id){
         categoryService.removeById(id);
         return ResponseResult.okResult();
-    }
+    }*/
 
     /**
      * Request URL: http://localhost:81/dev-api/content/category/2,15
-     * TODO 批量删除分类
      */
-    @DeleteMapping
-    public ResponseResult deleteCategoryList(@RequestParam Long[] ids){
-        System.out.println(ids);
+    @DeleteMapping("/{categoryIds}")
+    @SystemLog(businessName = "(批量)删除分类")
+    public ResponseResult deleteCategoryList(@PathVariable List<Long> categoryIds){
+        categoryService.removeByIds(categoryIds);
         return ResponseResult.okResult();
     }
 

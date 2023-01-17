@@ -2,16 +2,14 @@ package com.yuhui.controller;
 
 import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.dto.UserDto;
 import com.yuhui.domain.entity.Role;
 import com.yuhui.domain.entity.User;
 import com.yuhui.domain.vo.UserInfoAndRoleIdsVo;
-import com.yuhui.enums.AppHttpCodeEnum;
-import com.yuhui.exception.SystemException;
 import com.yuhui.service.RoleService;
 import com.yuhui.service.UserService;
 import com.yuhui.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,6 +68,16 @@ public class UserController {
         }
         // 批量删除
         userService.removeByIds(userIds);
+        return ResponseResult.okResult();
+    }
+
+    @PutMapping("/changeStatus")
+    @SystemLog(businessName = "修改用户状态")
+    public ResponseResult changeStatus(@RequestBody UserDto userDto){
+        User user = new User();
+        user.setId(userDto.getUserId());
+        user.setStatus(userDto.getStatus());
+        userService.updateById(user);
         return ResponseResult.okResult();
     }
 }
