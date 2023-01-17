@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yuhui.domain.ResponseResult;
+import com.yuhui.domain.entity.Category;
 import com.yuhui.domain.entity.User;
 import com.yuhui.domain.entity.UserRole;
 import com.yuhui.domain.vo.PageVo;
@@ -137,6 +138,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional
     public void updateUser(User user) {
+        // 根据id获取旧数据
+        User oldUser = getById(user.getId());
+        // 若传递过来的数据和旧数据不一样，说明进行了修改
+        if (!oldUser.getPhonenumber().equals(user.getPhonenumber())) {
+            // 判断是否重复
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            if (count(queryWrapper.eq(User::getPhonenumber, user.getPhonenumber())) > 0) {
+                throw new SystemException(AppHttpCodeEnum.PHONENUMBER_EXIST);
+            }
+        }
+        if (!oldUser.getEmail().equals(user.getEmail())) {
+            // 判断是否重复
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            if (count(queryWrapper.eq(User::getEmail, user.getEmail())) > 0) {
+                throw new SystemException(AppHttpCodeEnum.EMAIL_EXIST);
+            }
+        }
         // 删除用户与角色关联
         LambdaQueryWrapper<UserRole> userRoleUpdateWrapper = new LambdaQueryWrapper<>();
         userRoleUpdateWrapper.eq(UserRole::getUserId, user.getId());
@@ -144,12 +162,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 新增用户与角色管理
         insertUserRole(user);
         // 手机号、邮箱不能重复
-        if (!checkPhoneUnique(user)) {
+        /*if (!checkPhoneUnique(user)) {
             throw new SystemException(AppHttpCodeEnum.PHONENUMBER_EXIST);
         }
         if (!checkEmailUnique(user)) {
             throw new SystemException(AppHttpCodeEnum.EMAIL_EXIST);
-        }
+        }*/
         // 更新用户信息
         updateById(user);
     }

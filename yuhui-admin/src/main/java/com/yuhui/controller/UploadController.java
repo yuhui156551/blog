@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class UploadController {
     private UploadService uploadService;
 
     @PostMapping("/upload")
+    @SystemLog(businessName = "上传图片")
     public ResponseResult upload(@RequestParam("img") MultipartFile multipartFile){
         return uploadService.uploadImg(multipartFile);
     }

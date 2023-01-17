@@ -41,6 +41,7 @@ public class ArticleController {
     }
 
     @PostMapping
+    @SystemLog(businessName = "新增文章")
     public ResponseResult add(@RequestBody AddArticleDto articleDto){
         return articleService.add(articleDto);
     }

@@ -12,6 +12,7 @@ import com.yuhui.utils.BeanCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author yuhui
@@ -50,10 +51,10 @@ public class LinkController {
         return ResponseResult.okResult();
     }
 
-    @DeleteMapping("/{id}")
-    @SystemLog(businessName = "删除友链")
-    public ResponseResult deleteLink(@PathVariable("id") Long id){
-        return ResponseResult.okResult(linkService.removeById(id));
+    @DeleteMapping("/{ids}")
+    @SystemLog(businessName = "（批量）删除友链")
+    public ResponseResult deleteLink(@PathVariable("ids") List<Long> ids){
+        return ResponseResult.okResult(linkService.removeByIds(ids));
     }
 
     @PutMapping("/changeLinkStatus")

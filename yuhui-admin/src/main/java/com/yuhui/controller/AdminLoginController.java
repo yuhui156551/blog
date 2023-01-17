@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.User;
 import com.yuhui.enums.AppHttpCodeEnum;
@@ -37,6 +38,7 @@ public class AdminLoginController {
      *      存入SecurityContextHolder
      */
     @PostMapping("/user/login")
+    @SystemLog(businessName = "用户登录")
     public ResponseResult login(@RequestBody User user){
         if(!StringUtils.hasText(user.getUserName())){
             // 用户名为空
@@ -46,16 +48,19 @@ public class AdminLoginController {
     }
 
     @PostMapping("/user/logout")
+    @SystemLog(businessName = "用户登出")
     public ResponseResult logout(){
         return adminLoginService.logout();
     }
 
     @GetMapping("/getInfo")
+    @SystemLog(businessName = "获取用户信息")
     public ResponseResult<AdminUserInfoVo> getInfo(){
         return adminLoginService.getInfo();
     }
 
     @GetMapping("/getRouters")
+    @SystemLog(businessName = "获取菜单")
     public ResponseResult<RoutersVo> getRouters(){
         return adminLoginService.getRouters();
     }

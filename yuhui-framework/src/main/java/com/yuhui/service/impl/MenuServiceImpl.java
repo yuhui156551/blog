@@ -42,6 +42,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return getBaseMapper().selectPermsByUserId(id);
     }
 
+    /**
+     * 获取用户所具有的菜单树
+     * @param userId 用户id
+     * @return
+     */
     @Override
     public List<Menu> selectRouterMenuTreeByUserId(Long userId) {
         MenuMapper menuMapper = getBaseMapper();
