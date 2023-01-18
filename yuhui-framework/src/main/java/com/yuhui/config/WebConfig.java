@@ -32,6 +32,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
+    /**
+     * 消息转换器：将对象转换成响应体
+     */
     @Bean// 使用@Bean注入fastJsonHttpMessageConvert
     public HttpMessageConverter fastJsonHttpMessageConverters() {
         // 定义一个Convert转换消息的对象

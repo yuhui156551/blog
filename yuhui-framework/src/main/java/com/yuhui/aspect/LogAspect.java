@@ -21,15 +21,15 @@ import java.lang.reflect.Method;
  * @date 2023/1/7 9:58
  */
 @Component
-@Aspect
+@Aspect// 标识为切面类
 @Slf4j
 public class LogAspect {
 
-    @Pointcut("@annotation(com.yuhui.annotation.SystemLog)")
+    @Pointcut("@annotation(com.yuhui.annotation.SystemLog)")// 切点
     public void pt(){
     }
 
-    @Around("pt()")
+    @Around("pt()")// 制作切面
     public Object printLog(ProceedingJoinPoint pjp) throws Throwable {
         Object ret;
         try {

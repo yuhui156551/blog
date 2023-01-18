@@ -1,11 +1,6 @@
 package com.yuhui.contants;
 
-public class SystemConstants
-{
-    /**
-     *  文章是草稿
-     */
-    public static final int ARTICLE_STATUS_DRAFT = 1;
+public class SystemConstants {
     /**
      *  文章是正常发布状态
      */
