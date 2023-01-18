@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "oss",
+      "type": "com.yuhui.service.impl.OssUploadServiceImpl",
+      "sourceType": "com.yuhui.service.impl.OssUploadServiceImpl"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

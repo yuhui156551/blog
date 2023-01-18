@@ -20,7 +20,7 @@ public class UploadController {
     private UploadService uploadService;
 
     @PostMapping("/upload")
-    @SystemLog(businessName = "上传图片")
+//    @SystemLog(businessName = "上传图片") TODO 此处加了报错
     public ResponseResult upload(@RequestParam("img") MultipartFile multipartFile){
         return uploadService.uploadImg(multipartFile);
     }

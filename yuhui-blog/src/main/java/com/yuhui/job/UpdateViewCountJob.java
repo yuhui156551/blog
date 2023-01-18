@@ -26,8 +26,7 @@ public class UpdateViewCountJob {
     private ArticleService articleService;
 
     @Scheduled(cron = "0/5 * * * * ?")// * 0/10 * * * ?
-    public void updateViewCount(){
-
+    public void updateViewCount() {
         // 定时任务：每隔10分钟把Redis中的浏览量更新到数据库中
         Map<String, Integer> viewCountMap = redisCache.getCacheMap(SystemConstants.ARTICLE_VIEW_COUNT_KEY);
 
