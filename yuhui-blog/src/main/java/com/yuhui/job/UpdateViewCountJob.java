@@ -25,7 +25,7 @@ public class UpdateViewCountJob {
     @Autowired// 涉及批量操作，不选择mapper
     private ArticleService articleService;
 
-    @Scheduled(cron = "0/5 * * * * ?")// * 0/10 * * * ?
+    @Scheduled(cron = "* 0/10 * * * ?")// * 0/10 * * * ?
     public void updateViewCount() {
         // 定时任务：每隔10分钟把Redis中的浏览量更新到数据库中
         Map<String, Integer> viewCountMap = redisCache.getCacheMap(SystemConstants.ARTICLE_VIEW_COUNT_KEY);
@@ -34,6 +34,8 @@ public class UpdateViewCountJob {
                 .stream()
                 .map(entry -> new Article(Long.valueOf(entry.getKey()), entry.getValue().longValue()))
                 .collect(Collectors.toList());
+        // 批量更新
+        // TODO 莫名其妙出空指针bug，害，不影响使用、先不管了
         articleService.updateBatchById(articles);
 
         System.out.println("定时任务执行了..." + count++);

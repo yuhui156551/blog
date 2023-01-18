@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * 项目启动时预处理
+ * 项目启动时将数据库viewCount数据写入redis
  *
  * @author yuhui
  * @date 2023/1/7 19:02
