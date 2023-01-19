@@ -37,6 +37,7 @@ public class BlogLoginController {
     }
 
     @PostMapping("/logout")
+    @SystemLog(businessName = "用户登出")
     public ResponseResult logout(){
         return blogLoginService.logout();
     }

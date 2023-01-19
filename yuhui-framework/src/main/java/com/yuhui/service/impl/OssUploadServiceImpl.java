@@ -127,6 +127,7 @@ public class OssUploadServiceImpl implements UploadService {
                 System.out.println(putRet.key);
                 System.out.println(putRet.hash);
                 // 返回外链
+                // TODO 测试域名创建时间：2023-01-06 10:27:35，30天之后自动回收，到时候考虑买个域名
                 return "http://ro1llou5e.hn-bkt.clouddn.com/" + key;
             } catch (QiniuException ex) {
                 Response r = ex.response;

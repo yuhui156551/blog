@@ -53,12 +53,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public ResponseResult updateUserInfo(User user) {
-        updateById(user);
-        return ResponseResult.okResult();
-    }
-
-    @Override
     public ResponseResult register(User user) {
         // 对数据进行非空判断
         if (!StringUtils.hasText(user.getUserName())) {

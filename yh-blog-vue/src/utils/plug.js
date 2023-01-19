@@ -399,8 +399,14 @@ const Typeit = (isAimee,emId) =>{
             speech：所有的speech。
          ***/
 
-        var world = "yuhui"// 闪动字体
-        theater.describe("Luke", .9, emId);
+        var world = "yuhui"// TODO 闪动字体
+  /**
+   * 记录一次愚蠢行为：
+   *  博客主页面看到于辉，以为是前端代码的问题
+   *  找了好久。。。
+   *  最后才知道是谷歌自动翻译的。。。
+   */
+  theater.describe("Luke", .9, emId);
         // conosle.log()
         theater.on("*", function (eventName, originalEvent, sceneName, arg) {//做点什么
 

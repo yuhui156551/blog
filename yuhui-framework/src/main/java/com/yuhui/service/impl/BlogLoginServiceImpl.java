@@ -32,7 +32,8 @@ public class BlogLoginServiceImpl implements BlogLoginService {
     public ResponseResult login(User user) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
-        // 进行用户认证
+        // 进行用户认证，这里能根据用户名密码从数据库取到用户LoginUser信息
+        // 通过AuthenticationManager的authenticate方法来进行用户认证
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         // 判断认证是否通过
         if(Objects.isNull(authenticate)){

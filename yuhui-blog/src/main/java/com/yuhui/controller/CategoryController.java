@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/getCategoryList")
+    @SystemLog(businessName = "获取分类列表")
     public ResponseResult getCategoryList(){
         return categoryService.getCategoryList();
     }

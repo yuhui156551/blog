@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.annotation.SystemLog;
 import com.yuhui.contants.SystemConstants;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Comment;
@@ -21,32 +22,20 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    /**
-     * 分页获取文章评论信息
-     * @param articleId 文章id
-     * @param pageNum 页码
-     * @param pageSize 页面大小
-     * @return 评论信息
-     */
     @GetMapping("/commentList")
+    @SystemLog(businessName = "分页查询文章评论列表")
     public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize){
         return  commentService.commentList(SystemConstants.ARTICLE_COMMENT, articleId, pageNum, pageSize);
     }
 
-    /**
-     * 分页获取友链评论信息
-     */
     @GetMapping("/linkCommentList")
+    @SystemLog(businessName = "分页查询友链评论列表")
     public ResponseResult linkCommentList(Integer pageNum,Integer pageSize){
         return commentService.commentList(SystemConstants.LINK_COMMENT,null,pageNum,pageSize);
     }
 
-    /**
-     * 发布评论
-     * @param comment 请求体内容
-     * @return 200
-     */
     @PostMapping
+    @SystemLog(businessName = "发布评论")
     public ResponseResult addComment(@RequestBody Comment comment){
         return commentService.addComment(comment);
     }
