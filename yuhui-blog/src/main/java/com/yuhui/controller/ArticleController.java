@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Article;
 import com.yuhui.service.ArticleService;
@@ -20,16 +21,19 @@ public class ArticleController {
     private ArticleService articleService;
 
     @GetMapping("/hotArticleList")
+    @SystemLog(businessName = "获取热门文章")
     public ResponseResult hotArticleList() {
         return articleService.hotArticleList();
     }
 
     @GetMapping("/articleList")
+    @SystemLog(businessName = "分页查询文章")
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
         return articleService.articleList(pageNum, pageSize, categoryId);
     }
 
     @GetMapping("/{id}")
+    @SystemLog(businessName = "文章详情页")
     public ResponseResult getArticleDetail(@PathVariable("id") Long id){
         return articleService.getArticleDetail(id);
     }
@@ -42,6 +46,7 @@ public class ArticleController {
      * ④读取文章浏览量时从redis读取
      */
     @PutMapping("/updateViewCount/{id}")
+    @SystemLog(businessName = "更新浏览量")
     public ResponseResult updateViewCount(@PathVariable("id") Long id){
         return articleService.updateViewCount(id);
     }
