@@ -11,8 +11,6 @@
         <module name="reggie" />
         <module name="dianping" />
         <module name="yuhui-blog" />
-        <module name="user-service" />
-        <module name="eureka-server" />
         <module name="mall-common" />
         <module name="yuhui-framework" />
         <module name="security" />
@@ -20,21 +18,24 @@
         <module name="mall-admin" />
         <module name="mall-mbg" />
         <module name="mall-demo" />
-        <module name="order-service" />
         <module name="yuhui-admin" />
-        <module name="gateway" />
         <module name="mall-portal" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="cloud-demo" target="1.8" />
       <module name="consumer" target="1.8" />
+      <module name="eureka-server" target="1.8" />
+      <module name="gateway" target="1.8" />
       <module name="mq-demo" target="1.8" />
+      <module name="order-service" target="1.8" />
       <module name="publisher" target="1.8" />
       <module name="sangeng-admin" target="1.8" />
       <module name="sangeng-blog" target="1.8" />
       <module name="sangeng-framework" target="1.8" />
       <module name="SGBlog" target="1.8" />
       <module name="store" target="1.8" />
+      <module name="user-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

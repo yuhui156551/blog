@@ -16,9 +16,18 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     List<String> selectPermsByUserId(Long userId);
 
+    /**
+     * 返回所有菜单
+     */
     List<Menu> selectAllRouterMenu();
 
+    /**
+     * 根据用户id->角色id->获取对应菜单
+     */
     List<Menu> selectRouterMenuTreeByUserId(Long userId);
 
+    /**
+     * 根据角色id获取菜单id的集合
+     */
     List<Long> selectMenuListByRoleId(Long roleId);
 }

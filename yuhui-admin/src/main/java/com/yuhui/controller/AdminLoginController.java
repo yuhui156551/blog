@@ -55,12 +55,14 @@ public class AdminLoginController {
 
     @GetMapping("/getInfo")
     @SystemLog(businessName = "获取用户信息")
+    // 用户登录后触发
     public ResponseResult<AdminUserInfoVo> getInfo(){
         return adminLoginService.getInfo();
     }
 
     @GetMapping("/getRouters")
     @SystemLog(businessName = "获取菜单")
+    // 用户登录后触发
     public ResponseResult<RoutersVo> getRouters(){
         return adminLoginService.getRouters();
     }

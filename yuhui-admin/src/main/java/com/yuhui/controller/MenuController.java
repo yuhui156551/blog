@@ -36,6 +36,7 @@ public class MenuController {
 
     @GetMapping("/roleMenuTreeselect/{roleId}")
     @SystemLog(businessName = "加载角色菜单列表树")
+    // 角色管理：修改角色时触发
     public ResponseResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId) {
         // 获取菜单数据
         List<Menu> menus = menuService.selectMenuList(new Menu());
@@ -43,13 +44,14 @@ public class MenuController {
         List<Long> checkedKeys = menuService.selectMenuListByRoleId(roleId);
         // 构造树结构
         List<MenuTreeVo> menuTreeVos = SystemConverter.buildMenuSelectTree(menus);
-        // 将 角色id所关联的菜单id 和 所有菜单 返回给前端处理显示
+        // 将 角色id所关联的菜单id 和 所有菜单 返回给前端显示
         RoleMenuTreeSelectVo vo = new RoleMenuTreeSelectVo(checkedKeys, menuTreeVos);
         return ResponseResult.okResult(vo);
     }
 
     @GetMapping("/list")
-    @SystemLog(businessName = "菜单列表")
+    @SystemLog(businessName = "获取菜单列表")
+    // 菜单管理：点击时触发
     public ResponseResult list(Menu menu) {
         List<Menu> menus = menuService.selectMenuList(menu);
         List<MenuVo> menuVos = BeanCopyUtils.copyBeanList(menus, MenuVo.class);
