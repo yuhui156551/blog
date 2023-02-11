@@ -13,6 +13,7 @@
     <file url="file://$PROJECT_DIR$/yuhui-blog/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yuhui-framework/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/yuhui-framework/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../blog/blog-springboot/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../dianping/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../dianping/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../mall/mall-admin/src/main/java" charset="UTF-8" />
@@ -33,6 +34,10 @@
     <file url="file://$PROJECT_DIR$/../mall/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../reggie/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../reggie/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yh-mall/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yh-mall/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yh-mall/yh-mall-mbg/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../yh-mall/yh-mall-mbg/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

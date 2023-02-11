@@ -1,5 +1,6 @@
 package com.yuhui.controller;
 
+import cn.yuhui.service.IpCountService;
 import com.yuhui.annotation.SystemLog;
 import com.yuhui.domain.ResponseResult;
 import com.yuhui.domain.entity.Article;
@@ -7,6 +8,7 @@ import com.yuhui.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,9 +22,14 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Resource
+    private IpCountService ipCountService;
+
     @GetMapping("/hotArticleList")
     @SystemLog(businessName = "获取热门文章")
     public ResponseResult hotArticleList() {
+        // 自定义ip计数starter
+//        ipCountService.count();
         return articleService.hotArticleList();
     }
 

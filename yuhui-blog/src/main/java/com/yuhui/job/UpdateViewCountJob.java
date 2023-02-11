@@ -46,6 +46,6 @@ public class UpdateViewCountJob {
         // 批量更新
         articleService.updateBatchById(articles);
         // 记录执行次数
-        System.out.println("定时任务执行了..." + count++);
+//        System.out.println("定时任务执行了..." + count++);
     }
 }
