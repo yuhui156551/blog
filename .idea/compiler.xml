@@ -7,17 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mall-search" />
-        <module name="reggie" />
-        <module name="dianping" />
-        <module name="yuhui-blog" />
-        <module name="mall-common" />
         <module name="yuhui-framework" />
         <module name="mall-security" />
+        <module name="mall-search" />
         <module name="mall-admin" />
         <module name="mall-mbg" />
         <module name="mall-demo" />
+        <module name="reggie" />
+        <module name="dianping" />
+        <module name="yuhui-blog" />
         <module name="yuhui-admin" />
+        <module name="mall-common" />
         <module name="mall-portal" />
       </profile>
     </annotationProcessing>

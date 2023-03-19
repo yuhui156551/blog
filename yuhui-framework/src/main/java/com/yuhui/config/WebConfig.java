@@ -33,7 +33,10 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * 消息转换器：将对象转换成响应体
+     * 消息转换器：
+     * 1、自动给json请求添加请求头：Content-Type:application/json。
+     * 2、参数下划线转驼峰。
+     * 3、自定义一些其他配置
      */
     @Bean// 使用@Bean注入fastJsonHttpMessageConvert
     public HttpMessageConverter fastJsonHttpMessageConverters() {
